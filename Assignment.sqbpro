@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="D:/gradschool/ADA/WEDGE.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="877"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,9:mainProdSales"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="HourSales" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="73"/><column index="2" value="40"/><column index="3" value="60"/><column index="4" value="65"/><column index="5" value="45"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="ProdSales" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="213"/><column index="2" value="40"/><column index="3" value="49"/><column index="4" value="84"/><column index="5" value="55"/><column index="6" value="109"/><column index="7" value="60"/><column index="8" value="65"/><column index="9" value="45"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="wedge_queries.sql">-- Here's a place you to build a table of Sales by Hour
+-- Just a little stub for you to start with
+SELECT Hour, sum(Spend)
+FROM HourSales 
+Group BY Hour
+
+
+-- Build a table of Sales by Hour by Year
+SELECT Hour, sum(Spend), strftime('%Y',Dates)
+FROM HourSales 
+Group BY Hour
+Order By strftime('%Y',Dates)
+
+-- Here's a place you to build a table of Sales by Hour for 2015
+SELECT Hour, sum(Spend), strftime('%Y',Dates)
+FROM HourSales 
+WHERE strftime('%Y',Dates) = &quot;2015&quot;
+Group BY Hour
+
+-- Here's a place you to build a table of owner sales by month
+SELECT CardNum, Year, Month, Spend
+FROM OwnerSales
+-- Build a table of owner sales by month for owners who spent between $5K and $10K
+-- This may require a temporary table. 
+SELECT CardNum, Year, Month, Spend
+FROM OwnerSales
+Where Spend Between 5000 and 10000
+
+-- Here's a place you to build a table of the top 10 selling products at the Wedge
+SELECT UPC, Description, Spend,  	
+FROM ProdSales
+Order By Spend DESC
+LIMIT 10
+
+-- Here's a place you to build a table of the top 10 
+-- selling products at the Wedge by Year 2015 and 2016
+SELECT UPC, Description, Spend, Year 	
+FROM ProdSales
+WHERE Year Between 2015 and 2016
+Order By Spend DESC, Year DESC
+LIMIT 20
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
